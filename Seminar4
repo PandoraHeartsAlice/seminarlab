@@ -1,0 +1,170 @@
+#include <iostream>
+#include <iomanip>
+#include <random>
+using namespace std;
+
+void input(int* arr, int range)
+{
+    random_device rd;   // non-deterministic generator
+    mt19937 gen(rd());  // to seed mersenne twister.
+    uniform_int_distribution<> dist(-10, 10); // distribute results between -100 and 100 inclusive.
+
+    for (int i = 0; i < range; i++)
+    {
+        arr[i] = dist(gen);
+    }
+}
+
+void output(int* arr, int range)
+{
+    for (int i = 0; i < range; i++)
+    {
+        cout << left << "Elemen " << setw(2) << i << " | " << arr[i] << endl;
+    }
+}
+
+void number1(int* arrayA, int* arrayB, double& result, int a, int rangeA, int rangeB)
+{
+    for (int i = 0; i < rangeA; i++)
+    {
+        for (int j = 0; j < rangeB; j++)
+        {
+            if ((abs(arrayA[i] - arrayB[j]) > a) and ((arrayA[i] - arrayB[j]) != 0))
+            {
+                result *= abs(arrayA[i] - arrayB[j]);
+                //cout << result << " * " << abs(arrayA[i] - arrayB[j]) << endl;
+            }
+        }
+    }
+}
+
+void number2(int* arrayA, int* arrayB, double& result, int& n, int rangeA)
+{
+    for (int i = 0; i < rangeA; i++)
+    {
+        if (arrayB[i] > abs(arrayA[i] - arrayB[i]))
+        {
+            result *= arrayB[i];
+            n++;
+            //cout << "Index: " << i << "  Element value: " << arrayB[i] << endl;
+        }
+    }
+}
+
+void number3(int* arrayA, int* arrayB, double& result, int& n, int rangeA, int rangeB)
+{
+    for (int i = 0; i < rangeA; i++)
+    {
+        for (int j = 0; j < rangeB; j++)
+        {
+            if (arrayA[i] + arrayB[j] > 0)
+            {
+                result *= (arrayA[i] + arrayB[j]); // C26451 reported
+                // result *= (static_cast<__int64>(arrayA[i]) + static_cast<__int64>(arrayB[j]));
+                n++;
+                //cout << result << " * " << arrayA[i] + arrayB[j] << endl;
+            }
+        }
+    }
+}
+
+void number4(int* arrayA, int* arrayB, double& result, int& n, int rangeA)
+{
+    for (int i = 0; i < rangeA; i++)
+    {
+        if (arrayA[i] >= 0)
+            result += arrayA[i];
+        if (arrayB[i] >= 0)
+            result += arrayB[i];
+        else
+            n++;
+    }
+}
+
+void number5(int* arrayA, int& d, int& l, double& result, int& n, int rangeA)
+{
+    for (int i = 0; i < rangeA; i++)
+    {
+        if ((arrayA[i] < d) or (arrayA[i] > l))
+        {
+            result *= arrayA[i];
+            n++;
+        }
+    }
+}
+
+int main()
+{
+    double result;
+    int n = 0;
+
+    //1
+    int a;
+    result = 1;
+
+    cout << "a: ";
+    cin >> a;
+
+    int arrayY[25];
+    int arrayX[25];
+
+    input(arrayX, 25);
+    input(arrayY, 25);
+
+    number1(arrayX, arrayY, result, a, 25, 25);
+    cout << "Nember 1: "<< result << endl;
+
+    //2
+    n = 0;
+    result = 1;
+
+    int arrayY2[35];
+    int arrayX2[35];
+
+    input(arrayX2, 35);
+    input(arrayY2, 35);
+
+    number2(arrayX2, arrayY2, result, n, 35);
+    cout << "Nember 2: " << result << " " << n << endl;
+
+    //3
+    n = 0;
+    result = 1;
+
+    int arrayA[70];
+    int arrayB[70];
+
+    input(arrayA, 70);
+    input(arrayB, 70);
+
+    number3(arrayA, arrayB, result, n, 70, 70);
+    cout << "Nember 3: " << result << " " << n << endl;
+
+    //4
+    n = 0;
+    result = 0;
+
+    int arrayA2[20];
+    int arrayC[20];
+
+    input(arrayA2, 20);
+    input(arrayC, 20);
+
+    number4(arrayA2, arrayC, result, n, 20);
+    cout << "Nember 4: " << result << " " << n << endl << endl;
+
+    //5
+    int d, l;
+    n = 0;
+    result = 1;
+
+    int arrayA3[60];
+
+    input(arrayA, 60);
+
+    cout << "d and l: ";
+    cin >> d >> l;
+
+    number5(arrayA, d, l, result, n, 60);
+    cout << "Nember 5: " << result << " " << n << endl;
+}
