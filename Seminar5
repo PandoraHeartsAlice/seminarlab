@@ -3,6 +3,7 @@
 #include <time.h>
 #include <iomanip>
 #include <random>
+максим лох
 using namespace std;
 
 void create_array_one_dimensional(int*& arr, const int N) 
