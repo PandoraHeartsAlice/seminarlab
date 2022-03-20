@@ -8,7 +8,6 @@ using namespace std;
 void create_array_one_dimensional(int*& arr, const int N) {
 	delete[]arr;
 	arr = new int[N];
-	//maxim pidor??
 }
 void free_array_one_dimensional(int*& arr) {
 	delete[]arr;
